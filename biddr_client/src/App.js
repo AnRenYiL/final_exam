@@ -8,6 +8,7 @@ import { User, Session } from "./requests";
 import SignInPage from './components/SignInPage'
 import Navbar from "./components/Navbar";
 import AuctionNewPage from './components/AuctionNewPage'
+import AuthRoute from "./components/AuthRoute";
 
 class App extends React.Component {
   constructor(props) {
@@ -43,7 +44,12 @@ class App extends React.Component {
           <Switch>
             <Route path="/" exact component={WelcomePage} />
             <Route path="/auctions" exact component={AuctionIndexPage} />
-            <Route path="/auctions/new" exact component={AuctionNewPage} />
+            <AuthRoute
+              isAuthenticated={this.state.currentUser}
+              path="/auctions/new"
+              component={AuctionNewPage}
+            />
+            {/* <Route path="/auctions/new" exact component={AuctionNewPage} /> */}
             <Route
               path="/auctions/:id"
               render={routeProps => (
