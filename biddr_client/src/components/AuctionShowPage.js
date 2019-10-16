@@ -2,7 +2,8 @@ import React, { Component } from "react";
 
 import AuctionDetails from "./AuctionDetails";
 import BidList from "./BidList";
-import { Auction } from "../requests";
+import { Auction, Bid } from "../requests";
+import NewBidForm from './NewBidForm'
 
 class AuctionShowPage extends Component {
     constructor(props) {
@@ -11,10 +12,14 @@ class AuctionShowPage extends Component {
             auction: null
         };
     }
-
+    createBid = params => {
+        Bid.create(params).then(bid => {
+            // this.props.history.push(`/auctions/${params.auction_id}`);
+            window.location = window.location;
+        });
+    }
     componentDidMount() {
         Auction.one(this.props.match.params.id).then(auction => {
-            console.log(auction);
             this.setState({
                 auction: auction
             });
@@ -28,9 +33,17 @@ class AuctionShowPage extends Component {
                     {...this.state.auction}
                 />
                 {this.state.auction ?
-                    (<BidList
-                        bids={this.state.auction.bids}
-                    />) : (<div></div>)
+                    (
+                        <>
+                            <hr></hr>
+                            <NewBidForm
+                                auction_id={this.state.auction.id}
+                                onCreateBid={this.createBid}
+                            ></NewBidForm>
+                            <BidList
+                                bids={this.state.auction.bids}
+                            />
+                        </>) : (<></>)
                 }
             </div>
         );

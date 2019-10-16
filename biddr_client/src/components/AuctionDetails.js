@@ -6,6 +6,7 @@ function AuctionDetails(props) {
             <p>
                 {props.description} <br />
             </p>
+            <p>End at: {new Date(props.end_at).toDateString()}</p>
         </div>
     );
 }
