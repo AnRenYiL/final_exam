@@ -3,10 +3,11 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import WelcomePage from './components/WelcomePage'
 import AuctionIndexPage from './components/AuctionIndexPage'
-// import AuctionShowPage from './components/AuctionShowPage'
+import AuctionShowPage from './components/AuctionShowPage'
 import { User, Session } from "./requests";
 import SignInPage from './components/SignInPage'
 import Navbar from "./components/Navbar";
+import AuctionNewPage from './components/AuctionNewPage'
 
 class App extends React.Component {
   constructor(props) {
@@ -37,26 +38,29 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <Navbar currentUser={this.state.currentUser} onSignOut={this.signOut} />
-        <Switch>
-          <Route path="/" exact component={WelcomePage} />
-          <Route path="/auctions" exact component={AuctionIndexPage} />
-          {/* <Route
-          path="/auctions/:id"
-          render={routeProps => (
-            <AuctionShowPage
-              {...routeProps}
-              currentUser={this.state.currentUser}
+        <div className="ui container">
+          <Navbar currentUser={this.state.currentUser} onSignOut={this.signOut} />
+          <Switch>
+            <Route path="/" exact component={WelcomePage} />
+            <Route path="/auctions" exact component={AuctionIndexPage} />
+            <Route path="/auctions/new" exact component={AuctionNewPage} />
+            <Route
+              path="/auctions/:id"
+              render={routeProps => (
+                <AuctionShowPage
+                  {...routeProps}
+                  currentUser={this.state.currentUser}
+                />
+              )}
             />
-          )}
-        /> */}
-          <Route
-            path="/sign_in"
-            render={routeProps => (
-              <SignInPage onSignIn={this.getUser} {...routeProps} />
-            )}
-          />
-        </Switch>
+            <Route
+              path="/sign_in"
+              render={routeProps => (
+                <SignInPage onSignIn={this.getUser} {...routeProps} />
+              )}
+            />
+          </Switch>
+        </div>
       </Router >
     );
   }
